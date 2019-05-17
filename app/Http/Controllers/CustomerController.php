@@ -55,7 +55,7 @@ class CustomerController extends Controller
             [
                 'first_name' => 'required|string|max:30|min:1',
                 'last_name' => 'required|string|max:30|min:1',
-                'company' => 'required'
+                'company_id' => 'required'
             ]
         );
 
@@ -90,7 +90,10 @@ class CustomerController extends Controller
 
         $customer = Customer::findOrFail($id);
 
-        return view('admin.customers.edit', compact('customer'));
+        $companies = Company::select('id', 'name')->get();
+        $companies = $companies->pluck('name', 'id');
+
+        return view('admin.customers.edit', compact('customer', 'companies'));
     }
 
     /**
@@ -108,7 +111,7 @@ class CustomerController extends Controller
             [
                 'first_name' => 'string|max:30|min:1',
                 'last_name' => 'string|max:30|min:1',
-                'company' => 'required'
+                'company_id' => 'required'
             ]
         );
 

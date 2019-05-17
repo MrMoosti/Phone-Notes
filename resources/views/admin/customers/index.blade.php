@@ -30,20 +30,21 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Name</th><th>Email</th><th>Actions</th>
+                                        <th>ID</th><th>Name</th><th>Company</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($customers as $item)
+                                @foreach($customers as $customer)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td><a href="{{ url('/customers', $item->id) }}">{{ $item->first_name }}</a></td><td>{{ $item->company_id }}</td>
+                                        <td>{{ $customer->id }}</td>
+                                        <td><a href="{{ url('/customers', $customer->id) }}">{{ $customer->first_name . " " . $customer->last_name}}</a></td>
+                                        <td><a href="{{ url('/companies', $customer->company_id) }}">{{ $customer->company_id }}</a></td>
                                         <td>
-                                            <a href="{{ url('/customers' . $item->id) }}" title="View Customer"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/customers' . $item->id . '/edit') }}" title="Edit Customer"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('customers/' . $customer->id) }}" title="View Customer"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('customers/' . $customer->id . '/edit') }}" title="Edit Customer"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'url' => ['/customers', $item->id],
+                                                'url' => ['/customers', $customer->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(

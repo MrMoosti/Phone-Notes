@@ -11,7 +11,7 @@
                     <div class="card-body">
 
                         <a href="{{ url('/customers') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/customers' . $customer->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('customers/' . $customer->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                         {!! Form::open([
                             'method' => 'DELETE',
                             'url' => ['/customers', $customer->id],
@@ -31,12 +31,14 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID.</th> <th>Subject</th><th>Message</th><th>created_for</th>
+                                        <th>ID</th><th>Name</th><th>Company</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ $customer->id }}</td> <td> {{ $customer->first_name }}</td>
+                                        <td>{{ $customer->id }}</td>
+                                        <td>{{ $customer->first_name }}</td>
+                                        <td><a href="{{ url('/companies', $customer->company_id) }}">{{ $customer->company_id }}</a></td>
                                     </tr>
                                 </tbody>
                             </table>
