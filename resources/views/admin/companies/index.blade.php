@@ -30,20 +30,22 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Name</th><th>Email</th><th>Actions</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($companies as $item)
+                                @foreach($companies as $company)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td><a href="{{ url('/companies', $item->id) }}">{{ $item->subject }}</a></td><td>{{ $item->message }}</td>
+                                        <td>{{ $company->id }}</td>
+                                        <td><a href="{{ url('/companies', $company->id) }}">{{ $company->name }}</a></td>
                                         <td>
-                                            <a href="{{ url('/companies' . $item->id) }}" title="View Company"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/companies' . $item->id . '/edit') }}" title="Edit Company"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('companies/' . $company->id) }}" title="View Company"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('companies/' . $company->id . '/edit') }}" title="Edit Company"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'url' => ['/companies', $item->id],
+                                                'url' => ['/companies', $company->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
@@ -60,7 +62,6 @@
                             </table>
                             <div class="pagination"> {!! $companies->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
-
                     </div>
                 </div>
             </div>

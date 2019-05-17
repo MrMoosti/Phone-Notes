@@ -26,72 +26,100 @@ class CompanyController extends Controller
         return view('admin.companies.index', compact('companies'));
     }
 
-    /**
+        /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
-        $companies = Company::select('id', 'name')->get();
-        $companies = $companies->pluck('name', 'id');
-
-        return view('admin.companies.create', compact('companies'));
+        return view('admin.companies.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate(
+            $request,
+            [
+                'name' => 'required|string|max:255|unique:companies'
+            ]
+        );
+
+        $company = Company::create($data);
+
+        return redirect('/companies')->with('flash_message', 'Company added!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function show(Note $note)
+    public function show($id)
     {
-        //
+        $company = Company::findOrFail($id);
+
+        return view('admin.companies.show', compact('company'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function edit(Note $note)
+    public function edit($id)
     {
-        //
+
+        $company = Company::select('id', 'name')->findOrFail($id);
+
+        return view('admin.companies.edit', compact('company'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int      $id
+     *
+     * @return void
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $this->validate(
+            $request,
+            [
+                'name' => 'required|string|max:255|unique:companies'
+            ]
+        );
+
+        $company = Company::findOrFail($id);
+        $company->update($data);
+
+        return redirect('/companies')->with('flash_message', 'Company updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        //
+        Company::destroy($id);
+
+        return redirect('/companies')->with('flash_message', 'Company deleted!');
     }
 }

@@ -7,7 +7,7 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Users</div>
+                    <div class="card-header">Colleagues</div>
                     <div class="card-body">
                         <a href="{{ url('/colleagues/create') }}" class="btn btn-success btn-sm" title="Add New User">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
