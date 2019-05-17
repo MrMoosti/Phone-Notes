@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Status;
+use App\Company;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
@@ -33,65 +34,96 @@ class StatusController extends Controller
      */
     public function create()
     {
-        $statusses = Company::select('id', 'name')->get();
-        $statusses = $companies->pluck('name', 'id');
+        $companies = Company::select('id', 'name')->get();
+        $companies = $companies->pluck('name', 'id');
 
-        return view('admin.statusses.create', compact('statusses'));
+        return view('admin.statusses.create', compact('companies'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate(
+            $request,
+            [
+                'name' => 'required|string|max:30'
+            ]
+        );
+
+        $status = Status::create($data);
+
+        return redirect('/statusses')->with('flash_message', 'Status added!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function show(Note $note)
+    public function show($id)
     {
-        //
+        $status = Status::findOrFail($id);
+
+        return view('admin.statusses.show', compact('status'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function edit(Note $note)
+    public function edit($id)
     {
-        //
+
+        $status = Status::findOrFail($id);
+
+        return view('admin.statusses.edit', compact('status'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int      $id
+     *
+     * @return void
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $this->validate(
+            $request,
+            [
+                'name' => 'string|max:30|min:1'
+            ]
+        );
+
+        $status = Status::findOrFail($id);
+        $status->update($data);
+
+        return redirect('/statusses')->with('flash_message', 'Status updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        //
+        Status::destroy($id);
+
+        return redirect('/statusses')->with('flash_message', 'Status deleted!');
     }
 }

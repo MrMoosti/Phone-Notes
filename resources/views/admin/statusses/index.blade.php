@@ -30,7 +30,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Name</th><th>Email</th><th>Actions</th>
+                                        <th>ID</th><th>Name</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,8 +39,8 @@
                                         <td>{{ $item->id }}</td>
                                         <td><a href="{{ url('/statusses', $item->id) }}">{{ $item->name }}</a></td>
                                         <td>
-                                            <a href="{{ url('/statusses' . $item->id) }}" title="View Status"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/statusses' . $item->id . '/edit') }}" title="Edit Status"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('statusses/' . $item->id) }}" title="View Status"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('statusses/' . $item->id . '/edit') }}" title="Edit Status"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/statusses', $item->id],

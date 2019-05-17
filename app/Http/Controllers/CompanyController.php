@@ -26,7 +26,7 @@ class CompanyController extends Controller
         return view('admin.companies.index', compact('companies'));
     }
 
-        /**
+    /**
      * Show the form for creating a new resource.
      *
      * @return void
@@ -48,7 +48,7 @@ class CompanyController extends Controller
         $data = $this->validate(
             $request,
             [
-                'name' => 'required|string|max:255|unique:companies'
+                'name' => 'required|string|max:255|unique:companies|min:1'
             ]
         );
 
@@ -99,7 +99,7 @@ class CompanyController extends Controller
         $data = $this->validate(
             $request,
             [
-                'name' => 'required|string|max:255|unique:companies'
+                'name' => 'required|string|max:255|unique:companies|min:1'
             ]
         );
 

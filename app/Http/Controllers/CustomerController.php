@@ -35,68 +35,100 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $customers = Customer::select('id', 'first_name', 'last_name', 'company_id')->get();
-        $customers = $customers->pluck('first_name', 'last_name', 'id');
-
         $companies = Company::select('id', 'name')->get();
         $companies = $companies->pluck('name', 'id');
 
-        return view('admin.customers.create', compact('companies', 'customers'));
+        return view('admin.customers.create', compact('companies'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate(
+            $request,
+            [
+                'first_name' => 'required|string|max:30|min:1',
+                'last_name' => 'required|string|max:30|min:1',
+                'company' => 'required'
+            ]
+        );
+
+        $customer = Customer::create($data);
+
+        return redirect('/customers')->with('flash_message', 'Customer added!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function show(Note $note)
+    public function show($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        return view('admin.customers.show', compact('customer'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function edit(Note $note)
+    public function edit($id)
     {
-        //
+
+        $customer = Customer::findOrFail($id);
+
+        return view('admin.customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int      $id
+     *
+     * @return void
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $this->validate(
+            $request,
+            [
+                'first_name' => 'string|max:30|min:1',
+                'last_name' => 'string|max:30|min:1',
+                'company' => 'required'
+            ]
+        );
+
+        $customer = Customer::findOrFail($id);
+        $customer->update($data);
+
+        return redirect('/customers')->with('flash_message', 'Customer updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return void
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        //
+        Customer::destroy($id);
+
+        return redirect('/customers')->with('flash_message', 'Customer deleted!');
     }
 }
