@@ -12,6 +12,6 @@ class Note extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'created_for', 'status_id', 'company_id', 'customer_id', 'subject', 'phonenumber', 'message', 'created_at', 'updated_at'
+        'id', 'created_by', 'created_for', 'status_id', 'company_id', 'customer_id', 'subject', 'phonenumber', 'message', 'created_at'
     ];
 }

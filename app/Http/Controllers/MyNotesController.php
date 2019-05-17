@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Note;
-use App\User;
-use App\Customer;
-use App\Company;
-use App\Status;
 use Illuminate\Http\Request;
-use DB;
 
-class NoteController extends Controller
+use App\Note;
+use Auth;
+
+class MyNotesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,65 +19,16 @@ class NoteController extends Controller
         $keyword = $request->get('search');
         $perPage = 15;
 
+        $currentUser = Auth::user()->id;
+
         if (!empty($keyword)) {
-            $notes = Note::where('message', 'LIKE', "%$keyword%")->orWhere('subject', 'LIKE', "%$keyword%")
+            $notes = Note::where('created_for', $currentUser)->where('message', 'LIKE', "%$keyword%")->orWhere('subject', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $notes = Note::latest()->paginate($perPage);
+            $notes = Note::where('created_for', $currentUser)->latest()->paginate($perPage);
         }
 
-        return view('admin.notes.index', compact('notes'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $colleagues = User::select('id', 'first_name', 'last_name')->get();
-        $colleagues = $colleagues->pluck('full_name', 'id');
-
-        $customers = Customer::select('id', 'first_name' , 'last_name')->get();
-        $customers = $customers->pluck('full_name', 'id');
-
-        $companies = Company::select('id', 'name')->get();
-        $companies = $companies->pluck('name', 'id');
-
-        $statusses = Status::select('id', 'name')->get();
-        $statusses = $statusses->pluck('name', 'id');
-
-        return view('admin.notes.create', compact('colleagues' , 'customers', 'companies', 'statusses'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return void
-     */
-    public function store(Request $request)
-    {
-        $data = $this->validate(
-            $request,
-            [
-                'created_by' => 'required',
-                'created_for' => 'required',
-                'customer_id' => 'required',
-                'company_id' => 'required',
-                'subject' => 'required|string|min:2|max:65',
-                'phonenumber' => 'required|string|min:2|max:20',
-                'message' => 'required|string|min:2|max:250',
-                'status_id' => 'required'
-
-            ]
-        );
-
-        $note = Note::create($data);
-
-        return redirect('/notes')->with('flash_message', 'Note added!');
+        return view('admin.my-notes.index', compact('notes'));
     }
 
     /**
@@ -94,7 +42,7 @@ class NoteController extends Controller
     {
         $note = Note::findOrFail($id);
 
-        return view('admin.notes.show', compact('note'));
+        return view('admin.my-notes.show', compact('note'));
     }
 
     /**
@@ -121,7 +69,7 @@ class NoteController extends Controller
         $statusses = Status::select('id', 'name')->get();
         $statusses = $statusses->pluck('name', 'id');
 
-        return view('admin.notes.edit', compact('note','colleagues' , 'customers', 'companies', 'statusses'));
+        return view('admin.my-notes.edit', compact('note','colleagues' , 'customers', 'companies', 'statusses'));
     }
 
     /**
@@ -152,7 +100,7 @@ class NoteController extends Controller
         $note = Note::findOrFail($id);
         $note->update($data);
 
-        return redirect('/notes')->with('flash_message', 'Note updated!');
+        return redirect('/my/notes')->with('flash_message', 'Note updated!');
     }
 
     /**
@@ -166,6 +114,6 @@ class NoteController extends Controller
     {
         Note::destroy($id);
 
-        return redirect('/notes')->with('flash_message', 'Note deleted!');
+        return redirect('/my-notes')->with('flash_message', 'Note deleted!');
     }
 }

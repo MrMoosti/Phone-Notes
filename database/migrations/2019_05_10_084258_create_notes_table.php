@@ -15,7 +15,7 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('created_by');
             $table->unsignedInteger('created_for');
             $table->unsignedInteger('status_id');
             $table->unsignedInteger('company_id');
@@ -27,7 +27,7 @@ class CreateNotesTable extends Migration
         });
 
         Schema::table('notes', function($table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('created_for')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

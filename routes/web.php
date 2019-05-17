@@ -11,19 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin.dashboard');
-});
-
-Route::get('/home', function () {
-    return view('admin.dashboard');
-})->name('home');
-
 Auth::routes();
 
-Route::get('admin', 'Admin\AdminController@index');
-Route::resource('/colleagues', 'Admin\UsersController');
-Route::resource('/notes', 'NoteController');
-Route::resource('/companies', 'CompanyController');
-Route::resource('/customers', 'CustomerController');
-Route::resource('/statusses', 'StatusController');
+Route::middleware(['auth'])->group(function(){
+
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('/');
+    
+    Route::get('/home', function () {
+        return redirect()->route('/');
+    })->name('home');
+    
+    Route::get('admin', 'Admin\AdminController@index');
+    Route::resource('/colleagues', 'Admin\UsersController');
+    Route::resource('/notes', 'NoteController');
+    Route::resource('/companies', 'CompanyController');
+    Route::resource('/customers', 'CustomerController');
+    Route::resource('/statusses', 'StatusController');
+
+    Route::resource('/my/notes', 'MyNotesController');
+});

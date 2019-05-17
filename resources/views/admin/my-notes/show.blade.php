@@ -7,14 +7,14 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Notes</div>
+                    <div class="card-header">My Notes</div>
                     <div class="card-body">
 
-                        <a href="{{ url('/notes') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('notes/' . $note->id . '/edit') }}" title="Edit Note"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('/my/notes') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('my/notes/' . $note->id . '/edit') }}" title="Edit Note"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                         {!! Form::open([
                             'method' => 'DELETE',
-                            'url' => ['/notes', $note->id],
+                            'url' => ['/my/notes', $note->id],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
@@ -59,7 +59,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>

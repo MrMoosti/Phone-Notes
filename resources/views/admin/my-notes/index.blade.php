@@ -7,13 +7,10 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Notes</div>
+                    <div class="card-header">My Notes</div>
                     <div class="card-body">
-                        <a href="{{ url('/notes/create') }}" class="btn btn-success btn-sm" title="Add New User">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/notes', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'url' => '/my/notes', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
                             <span class="input-group-append">
