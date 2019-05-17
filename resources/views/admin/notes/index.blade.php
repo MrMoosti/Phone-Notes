@@ -7,13 +7,13 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Users</div>
+                    <div class="card-header">Notes</div>
                     <div class="card-body">
-                        <a href="{{ url('/colleagues/create') }}" class="btn btn-success btn-sm" title="Add New User">
+                        <a href="{{ url('/notes/create') }}" class="btn btn-success btn-sm" title="Add New User">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/colleagues', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'url' => '/notes', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
                             <span class="input-group-append">
@@ -30,21 +30,24 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Name</th><th>Email</th><th>Actions</th>
+                                        <th>ID</th><th>Created by</th><th>Created for</th><th>Customer ID</th><th>Subject</th><th>Status ID</th><th>Created At</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($users as $item)
+                                @foreach($notes as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td><a href="{{ url('/colleagues', $item->id) }}">{{ $item->first_name . " " . $item->last_name  }}</a></td>
-                                        <td>{{ $item->email }}</td>
+                                        <td>Created by</td>
+                                        <td>Customer for</td>
+                                        <td>Subject</td>
+                                        <td>Status ID</td>
+                                        <td>Created At</td>
                                         <td>
-                                            <a href="{{ url('colleagues/' . $item->id) }}" title="View User"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('colleagues/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/notes' . $item->id) }}" title="View User"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/notes' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'url' => ['/colleagues', $item->id],
+                                                'url' => ['/notes', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
@@ -59,7 +62,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination"> {!! $users->appends(['search' => Request::get('search')])->render() !!} </div>
+                            <div class="pagination"> {!! $notes->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
                     </div>

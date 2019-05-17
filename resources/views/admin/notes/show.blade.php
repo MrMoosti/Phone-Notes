@@ -7,14 +7,14 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">User</div>
+                    <div class="card-header">Notes</div>
                     <div class="card-body">
 
-                        <a href="{{ url('colleagues/') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('colleagues/' . $user->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('/notes') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/notes' . $user->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                         {!! Form::open([
                             'method' => 'DELETE',
-                            'url' => ['/colleagues', $user->id],
+                            'url' => ['/notes', $note->id],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
@@ -31,16 +31,17 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID.</th> <th>Name</th><th>Email</th>
+                                        <th>ID.</th> <th>Subject</th><th>Message</th><th>created_for</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ $user->id }}</td> <td> {{ $user->name }} </td><td> {{ $user->email }} </td>
+                                        <td>{{ $note->id }}</td> <td> {{ $note->subject }} </td><td> {{ $note->created_for }} </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>

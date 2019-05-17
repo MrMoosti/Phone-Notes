@@ -21,24 +21,9 @@ Route::get('/home', function () {
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
-
-
-
 Route::get('admin', 'Admin\AdminController@index');
-Route::resource('admin/roles', 'Admin\RolesController');
-Route::resource('admin/permissions', 'Admin\PermissionsController');
-Route::resource('admin/users', 'Admin\UsersController');
-Route::resource('admin/pages', 'Admin\PagesController');
-Route::resource('admin/activitylogs', 'Admin\ActivityLogsController')->only([
-    'index', 'show', 'destroy'
-]);
-Route::resource('admin/settings', 'Admin\SettingsController');
-Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
-Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
-
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => 'admin'], function () {
-    Route::get('/', ['uses' => 'AdminController@index']);
- });
-
-Route::resource('note/notessss', 'Note\\NotessssController');
+Route::resource('/colleagues', 'Admin\UsersController');
+Route::resource('/notes', 'NoteController');
+Route::resource('/companies', 'CompanyController');
+Route::resource('/customers', 'CustomerController');
+Route::resource('/statusses', 'StatusController');
