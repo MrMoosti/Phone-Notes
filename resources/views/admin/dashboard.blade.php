@@ -10,7 +10,7 @@
                     <div class="card-header">Dashboard</div>
 
                     <div class="card-body">
-                        Your application's dashboard.
+                        Thank you for logging in! <br>{{Auth::user()->first_name . " " . Auth::user()->last_name}}, welcome to the dashboard page.
                     </div>
                 </div>
             </div>
